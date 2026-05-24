@@ -1,0 +1,29 @@
+# Plano de Integração: Painel Administrativo (Decap CMS)
+
+Excelente escolha! A Opção 1 (Netlify + Decap CMS) é a mais moderna, segura e com custo zero para hospedagem e painel.
+
+Como o nosso site atual é composto por arquivos HTML rápidos, a estratégia para o CMS funcionar perfeitamente será a seguinte:
+
+## 1. Criação do Painel Administrativo (/admin)
+- Vou criar uma pasta "admin" com os arquivos necessários para o painel.
+- Esse painel será gerado pelo Decap CMS. Ele permitirá que você faça login com sua conta (configurada depois no Netlify).
+
+## 2. Criação do "Banco de Dados" (JSON)
+- O painel salvará as suas alterações em um arquivo leve chamado "settings.json".
+- Nele, você poderá fazer o upload e trocar a **Logomarca**, a **Imagem do Hero (Fundo)** e até mesmo o **Número do WhatsApp**.
+
+## 3. Conexão do Site com o Painel
+- Adicionarei um pequeno script JavaScript invisível nos nossos arquivos index.html e servicos.html.
+- O papel desse script será ler o arquivo "settings.json" e trocar a logo e o fundo da tela automaticamente assim que a página carregar.
+
+## 4. Botão "Acesso ao Sistema"
+- Conforme alinhamos, vou aproveitar essa atualização para adicionar um botão **"Acessar Sistema"** no cabeçalho (Header) do site, que redirecionará síndicos e moradores para o seu sistema de gestão robusto atual que roda separado.
+
+---
+
+## PERGUNTAS PARA VOCÊ RESPONDER AQUI NO CHAT:
+
+Antes de eu programar essa infraestrutura, por favor me confirme:
+
+1. Posso incluir apenas os campos **"Logo"**, **"Imagem de Fundo"** e **"Número do WhatsApp"** no painel? Tem mais alguma coisa urgente que você queira poder alterar por lá?
+2. Qual é a URL ou o texto que devo colocar no botão de Login do Sistema por enquanto? (ex: "Área do Cliente", "Acessar Sistema"). Posso colocar um link vazio "#" por enquanto para você alterar depois.

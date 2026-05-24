@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gecon Condomínios — Ficha de Cadastro</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: #fff;
+            color: #1a1a1a;
+            font-size: 12px;
+        }
+
+        /* ---- PAGE ---- */
+        .page {
+            width: 210mm;
+            height: 297mm;
+            padding: 14mm 16mm 12mm;
+            margin: 0 auto;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ---- HEADER ---- */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #09492C;
+            margin-bottom: 22px;
+        }
+        .header-left { display: flex; align-items: center; }
+        .header-left img { height: 70px; width: auto; }
+        .header-right { text-align: right; }
+        .doc-title { font-size: 14px; font-weight: 800; color: #09492C; text-transform: uppercase; letter-spacing: 1px; }
+        .doc-sub { font-size: 10px; color: #9ca3af; margin-top: 3px; }
+
+        /* ---- SECTION HEADER ---- */
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #09492C;
+            background: #f0faf4;
+            border: 1px solid #c6e8d5;
+            border-radius: 20px;
+            padding: 4px 12px;
+            margin-bottom: 14px;
+        }
+        .section-label .num {
+            width: 18px; height: 18px;
+            background: #09492C;
+            color: #fff;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 9px; font-weight: 800;
+        }
+
+        /* ---- GRID ---- */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 20px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px 20px; }
+        .col-span-2 { grid-column: span 2; }
+        .col-span-3 { grid-column: span 3; }
+
+        /* ---- FIELD ---- */
+        .field { display: flex; flex-direction: column; gap: 5px; }
+        .field label {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #6b7280;
+        }
+        .field label .req { color: #09492C; }
+        .field .line {
+            border: none;
+            border-bottom: 1.5px solid #d1d5db;
+            height: 32px;
+            width: 100%;
+            background: transparent;
+        }
+        .field .line:focus { outline: none; border-bottom-color: #09492C; }
+
+        /* ---- CARGO SELECT ---- */
+        .cargo-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
+        .cargo-opt {
+            display: flex; align-items: center; gap: 5px;
+            font-size: 11px; color: #374151; font-weight: 500;
+        }
+        .cargo-opt input[type="radio"] { accent-color: #09492C; }
+
+        /* ---- DIVIDER ---- */
+        .divider { border: none; border-top: 1px solid #e5e7eb; margin: 24px 0; }
+
+        /* ---- SERVICES GRID ---- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .service-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 14px 10px;
+        }
+        .service-item input[type="checkbox"] { accent-color: #09492C; width: 15px; height: 15px; flex-shrink: 0; }
+        .service-item span { font-size: 11px; font-weight: 600; color: #374151; line-height: 1.3; }
+
+        /* ---- VISIT SECTION ---- */
+        .visit-box {
+            border: 1.5px solid #c6e8d5;
+            border-radius: 12px;
+            padding: 18px 20px;
+            background: #f9fefb;
+            margin-top: 22px;
+        }
+        .visit-title {
+            font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
+            color: #09492C; margin-bottom: 14px; display: flex; align-items: center; gap: 5px;
+        }
+        .visit-title .opt-badge {
+            font-size: 9px; font-weight: 600; color: #9ca3af; text-transform: uppercase;
+            letter-spacing: 1px; margin-left: auto;
+        }
+        .turno-options { display: flex; gap: 16px; margin-top: 6px; }
+        .turno-opt { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 500; color: #374151; }
+        .turno-opt input[type="radio"] { accent-color: #09492C; }
+
+        /* ---- FOOTER ---- */
+        .footer {
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .footer-left { font-size: 9px; color: #9ca3af; line-height: 1.6; }
+        .footer-right { font-size: 9px; color: #9ca3af; text-align: right; }
+        .footer-right strong { color: #09492C; }
+
+        /* ---- SIGNATURE LINE ---- */
+        .signature-area { margin-top: 16px; }
+        .signature-line {
+            display: flex;
+            gap: 20px;
+            align-items: flex-end;
+        }
+        .sig-block { flex: 1; }
+        .sig-block .line { border-bottom: 1px solid #9ca3af; height: 28px; }
+        .sig-block .sig-label { font-size: 8px; color: #9ca3af; margin-top: 3px; text-align: center; }
+
+        /* ---- PRINT ---- */
+        @media print {
+            body { background: #fff; }
+            .page { margin: 0; padding: 10mm 14mm; }
+            .no-print { display: none !important; }
+            @page { size: A4; margin: 0; }
+        }
+
+        /* ---- SCREEN ONLY ---- */
+        @media screen {
+            body { background: #f3f4f6; padding: 20px; }
+            .page { box-shadow: 0 4px 24px rgba(0,0,0,.10); }
+            .print-btn {
+                display: block;
+                margin: 0 auto 16px;
+                width: 210mm;
+                text-align: right;
+            }
+            .print-btn button {
+                font-family: 'Manrope', sans-serif;
+                background: #09492C; color: #fff;
+                border: none; border-radius: 8px;
+                padding: 9px 20px;
+                font-size: 12px; font-weight: 700;
+                cursor: pointer; letter-spacing: 0.5px;
+            }
+            .print-btn button:hover { background: #0a5c37; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="print-btn no-print">
+        <button onclick="window.print()">⎙ Imprimir / Salvar PDF</button>
+    </div>
+
+    <div class="page">
+
+        <!-- HEADER -->
+        <div class="header">
+            <div class="header-left">
+                <img src="Logos/WhatsApp Image 2026-05-18 at 11.18.12.jpeg" alt="Gecon Gestão de Condomínios">
+            </div>
+            <div class="header-right">
+                <div class="doc-title">Ficha de Cadastro</div>
+                <div class="doc-sub">geconsaopaulo.com.br &nbsp;|&nbsp; Data: _____ / _____ / _________</div>
+            </div>
+        </div>
+
+        <!-- STEP 1: DADOS PESSOAIS -->
+        <div class="section-label">
+            <span class="num">1</span>
+            Dados do Responsável
+        </div>
+
+        <div class="grid-2">
+            <div class="field col-span-2">
+                <label>Nome Completo <span class="req">*</span></label>
+                <div class="line"></div>
+            </div>
+            <div class="field">
+                <label>E-mail <span class="req">*</span></label>
+                <div class="line"></div>
+            </div>
+            <div class="field">
+                <label>WhatsApp <span class="req">*</span></label>
+                <div class="line"></div>
+            </div>
+            <div class="field col-span-2">
+                <label>Nome do Condomínio <span class="req">*</span></label>
+                <div class="line"></div>
+            </div>
+            <div class="field col-span-2">
+                <label>Bairro</label>
+                <div class="line"></div>
+            </div>
+            <div class="field">
+                <label>Nº de Unidades</label>
+                <div class="line"></div>
+            </div>
+            <div class="field">
+                <label>Nº de Torres</label>
+                <div class="line"></div>
+            </div>
+            <div class="field">
+                <label>Cargo</label>
+                <div class="cargo-options">
+                    <label class="cargo-opt"><input type="radio" name="cargo"> Síndico</label>
+                    <label class="cargo-opt"><input type="radio" name="cargo"> Subsíndico</label>
+                    <label class="cargo-opt"><input type="radio" name="cargo"> Conselheiro</label>
+                    <label class="cargo-opt"><input type="radio" name="cargo"> Morador</label>
+                </div>
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- STEP 2: SERVIÇOS -->
+        <div class="section-label">
+            <span class="num">2</span>
+            Serviços de Interesse
+        </div>
+
+        <div class="services-grid">
+            <div class="service-item">
+                <input type="checkbox">
+                <span>Admin. Condominial</span>
+            </div>
+            <div class="service-item">
+                <input type="checkbox">
+                <span>Portaria Remota</span>
+            </div>
+            <div class="service-item">
+                <input type="checkbox">
+                <span>Mão de Obra Terceirizada</span>
+            </div>
+            <div class="service-item">
+                <input type="checkbox">
+                <span>Zeladoria</span>
+            </div>
+            <div class="service-item">
+                <input type="checkbox">
+                <span>Assessoria Jurídica</span>
+            </div>
+            <div class="service-item">
+                <input type="checkbox">
+                <span>Gecon Bank</span>
+            </div>
+            <div class="service-item">
+                <input type="checkbox">
+                <span>Limpeza</span>
+            </div>
+            <div class="service-item">
+                <input type="checkbox">
+                <span>Torre de Segurança</span>
+            </div>
+        </div>
+
+        <!-- AGENDAMENTO -->
+        <div class="visit-box">
+            <div class="visit-title">
+                Agendamento de Visita ao Condomínio
+                <span class="opt-badge">Opcional</span>
+            </div>
+            <div class="grid-3">
+                <div class="field col-span-2">
+                    <label>Data Preferida</label>
+                    <div class="line"></div>
+                </div>
+                <div class="field">
+                    <label>Período Preferido</label>
+                    <div class="turno-options">
+                        <label class="turno-opt"><input type="radio" name="turno"> Manhã</label>
+                        <label class="turno-opt"><input type="radio" name="turno"> Tarde</label>
+                        <label class="turno-opt"><input type="radio" name="turno"> Fim de Tarde</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <div class="footer-left">
+                <strong style="color:#09492C">Gecon Condomínios</strong> — São Paulo, SP<br>
+                geconsaopaulo.com.br &nbsp;|&nbsp; contato@geconsaopaulo.com.br
+            </div>
+            <div class="footer-right">
+                Uso interno — ficha de cadastro<br>
+                <strong>(*) Campos obrigatórios</strong>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
