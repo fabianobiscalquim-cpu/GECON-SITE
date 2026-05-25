@@ -271,7 +271,7 @@
         .beam-h {
             position: absolute;
             height: 2px; width: 80px;
-            top: 0; left: 0;
+            top: 0; right: 0; left: auto;
             background: linear-gradient(90deg, transparent, rgba(74,222,128,1), rgba(16,185,129,0.6), transparent);
             pointer-events: none;
             z-index: 60;
@@ -281,17 +281,21 @@
         .beam-v {
             position: absolute;
             width: 2px; height: 80px;
-            top: 0; right: 0;
+            bottom: 0; top: auto; left: 0; right: auto;
             background: linear-gradient(180deg, transparent, rgba(74,222,128,1), rgba(16,185,129,0.6), transparent);
             pointer-events: none;
             z-index: 60;
             animation: beamV 5s linear infinite;
             filter: blur(0.5px);
         }
-        .beam-delay-1 { animation-delay: -1s; }
-        .beam-delay-2 { animation-delay: -2s; }
-        .beam-delay-3 { animation-delay: -3s; }
-        .beam-delay-4 { animation-delay: -4s; }
+        .beam-delay-1 { animation-delay: -0.7s; }
+        .beam-delay-2 { animation-delay: -1.9s; }
+        .beam-delay-3 { animation-delay: -3.1s; }
+        .beam-delay-4 { animation-delay: -2.4s; }
+        .beam-delay-5 { animation-delay: -4.3s; }
+        .beam-delay-6 { animation-delay: -1.2s; }
+        .beam-delay-7 { animation-delay: -3.8s; }
+        .beam-delay-8 { animation-delay: -0.5s; }
         .beam-bottom { top: auto; bottom: 0; }
 
         /* Marquee dot pulse */
@@ -304,12 +308,12 @@
         }
 
         @keyframes beamH {
-            from { transform: translateX(-100px); }
-            to   { transform: translateX(380px); }
+            from { transform: translateX(80px); }
+            to   { transform: translateX(-420px); }
         }
         @keyframes beamV {
-            from { transform: translateY(-100px); }
-            to   { transform: translateY(520px); }
+            from { transform: translateY(80px); }
+            to   { transform: translateY(-560px); }
         }
 
         /* Ambient light orb */
@@ -509,7 +513,7 @@
                         GECON Condomínios
                     </h1>
                     <div class="relative inline-block overflow-hidden px-5 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border text-white md:text-gecon border-white/50 bg-white/15 md:border-gecon/40 md:bg-gecon/5 backdrop-blur-sm">
-                        <div class="beam-h beam-bottom beam-delay-2" style="width:50px;"></div>
+                        <div class="beam-h beam-bottom beam-delay-6" style="width:50px;"></div>
                         Unidade São Paulo
                     </div>
                 </div>
@@ -524,7 +528,7 @@
                     
                     <!-- Card 1: Administração Condominial (Azul) -->
                     <div class="absolute inset-0 w-full h-full rounded-[2rem] overflow-hidden border-t border-l border-r border-b border-t-white/15 border-l-white/8 border-r-white/8 border-b-white/5 bg-white/[0.04] backdrop-blur-2xl backdrop-saturate-150 p-6 flex flex-col justify-between shadow-[0_24px_60px_rgba(59,130,246,0.15)]" style="animation: stackCycle 15s infinite cubic-bezier(0.4, 0, 0.2, 1); animation-delay: 0s;">
-                        <div class="beam-h"></div><div class="beam-v"></div>
+                        <div class="beam-h"></div><div class="beam-v beam-delay-3"></div>
                         <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=400&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-25 z-0" alt="Administração Condominial">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#050a14]/90 via-[#050a14]/55 to-transparent z-0 pointer-events-none"></div>
                         <div class="absolute -top-6 -right-6 w-44 h-44 bg-[#3B82F6] rounded-full blur-[100px] opacity-30 pointer-events-none z-0"></div>
@@ -546,7 +550,7 @@
 
                     <!-- Card 2: Mão de Obra Terceirizada (Verde) -->
                     <div class="absolute inset-0 w-full h-full rounded-[2rem] overflow-hidden border-t border-l border-r border-b border-t-white/15 border-l-white/8 border-r-white/8 border-b-white/5 bg-white/[0.04] backdrop-blur-2xl backdrop-saturate-150 p-6 flex flex-col justify-between shadow-[0_24px_60px_rgba(16,185,129,0.15)]" style="animation: stackCycle 15s infinite cubic-bezier(0.4, 0, 0.2, 1); animation-delay: -3s;">
-                        <div class="beam-h beam-delay-1"></div><div class="beam-v beam-delay-1"></div>
+                        <div class="beam-h beam-delay-2"></div><div class="beam-v beam-delay-5"></div>
                         <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=400&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-25 z-0" alt="Mão de Obra Terceirizada">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#050a14]/90 via-[#050a14]/55 to-transparent z-0 pointer-events-none"></div>
                         <div class="absolute -top-6 -right-6 w-44 h-44 bg-[#10b981] rounded-full blur-[100px] opacity-30 pointer-events-none z-0"></div>
@@ -568,7 +572,7 @@
 
                     <!-- Card 3: Portaria Remota (Branco) -->
                     <div class="absolute inset-0 w-full h-full rounded-[2rem] overflow-hidden border-t border-l border-r border-b border-t-white/15 border-l-white/8 border-r-white/8 border-b-white/5 bg-white/[0.04] backdrop-blur-2xl backdrop-saturate-150 p-6 flex flex-col justify-between shadow-[0_24px_60px_rgba(255,255,255,0.06)]" style="animation: stackCycle 15s infinite cubic-bezier(0.4, 0, 0.2, 1); animation-delay: -6s;">
-                        <div class="beam-h beam-delay-2"></div><div class="beam-v beam-delay-2"></div>
+                        <div class="beam-h beam-delay-4"></div><div class="beam-v beam-delay-1"></div>
                         <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=400&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-25 z-0" alt="Portaria Remota">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#050a14]/90 via-[#050a14]/55 to-transparent z-0 pointer-events-none"></div>
                         <div class="absolute -top-6 -right-6 w-44 h-44 bg-white rounded-full blur-[100px] opacity-15 pointer-events-none z-0"></div>
@@ -590,7 +594,7 @@
 
                     <!-- Card 4: Tecnologia (Ouro) -->
                     <div class="absolute inset-0 w-full h-full rounded-[2rem] overflow-hidden border-t border-l border-r border-b border-t-white/15 border-l-white/8 border-r-white/8 border-b-white/5 bg-white/[0.04] backdrop-blur-2xl backdrop-saturate-150 p-6 flex flex-col justify-between shadow-[0_24px_60px_rgba(201,162,39,0.18)]" style="animation: stackCycle 15s infinite cubic-bezier(0.4, 0, 0.2, 1); animation-delay: -9s;">
-                        <div class="beam-h beam-delay-3"></div><div class="beam-v beam-delay-3"></div>
+                        <div class="beam-h beam-delay-6"></div><div class="beam-v beam-delay-7"></div>
                         <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=400&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-25 z-0" alt="Tecnologia">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#050a14]/90 via-[#050a14]/55 to-transparent z-0 pointer-events-none"></div>
                         <div class="absolute -top-6 -right-6 w-44 h-44 bg-[#C9A227] rounded-full blur-[100px] opacity-35 pointer-events-none z-0"></div>
@@ -612,7 +616,7 @@
 
                     <!-- Card 5: Prestação de Contas (Prateado) -->
                     <div class="absolute inset-0 w-full h-full rounded-[2rem] overflow-hidden border-t border-l border-r border-b border-t-white/15 border-l-white/8 border-r-white/8 border-b-white/5 bg-white/[0.04] backdrop-blur-2xl backdrop-saturate-150 p-6 flex flex-col justify-between shadow-[0_24px_60px_rgba(148,163,184,0.12)]" style="animation: stackCycle 15s infinite cubic-bezier(0.4, 0, 0.2, 1); animation-delay: -12s;">
-                        <div class="beam-h beam-delay-4"></div><div class="beam-v beam-delay-4"></div>
+                        <div class="beam-h beam-delay-8"></div><div class="beam-v beam-delay-2"></div>
                         <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=400&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-25 z-0" alt="Prestação de Contas">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#050a14]/90 via-[#050a14]/55 to-transparent z-0 pointer-events-none"></div>
                         <div class="absolute -top-6 -right-6 w-44 h-44 bg-[#94A3B8] rounded-full blur-[100px] opacity-25 pointer-events-none z-0"></div>
@@ -637,19 +641,19 @@
                 <div class="grid grid-cols-3 gap-2 md:gap-4 w-full">
                     <div class="relative overflow-hidden bg-transparent rounded-2xl md:rounded-3xl p-3 md:p-6 text-center transition-all duration-300 hover:-translate-y-1 group">
                         <div class="absolute inset-0 rounded-[inherit] pointer-events-none p-[2px] bg-gradient-to-tl from-gecon via-gecon/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity" style="-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude;"></div>
-                        <div class="beam-h beam-delay-1"></div>
+                        <div class="beam-h beam-delay-5"></div>
                         <span class="relative z-10 text-2xl md:text-4xl font-extrabold text-gecon stat-num block mb-1 drop-shadow-sm">+200</span>
                         <span class="relative z-10 text-[9px] md:text-[10px] text-stone-600 uppercase tracking-widest font-bold">Condomínios</span>
                     </div>
                     <div class="relative overflow-hidden bg-transparent rounded-2xl md:rounded-3xl p-3 md:p-6 text-center transition-all duration-300 hover:-translate-y-1 group">
                         <div class="absolute inset-0 rounded-[inherit] pointer-events-none p-[2px] bg-gradient-to-tl from-gecon via-gecon/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity" style="-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude;"></div>
-                        <div class="beam-h beam-delay-3"></div>
+                        <div class="beam-h beam-delay-7"></div>
                         <span class="relative z-10 text-2xl md:text-4xl font-extrabold text-gecon stat-num block mb-1 drop-shadow-sm">30%</span>
                         <span class="relative z-10 text-[9px] md:text-[10px] text-stone-600 uppercase tracking-widest font-bold">Redução Custo</span>
                     </div>
                     <div class="relative overflow-hidden bg-transparent rounded-2xl md:rounded-3xl p-3 md:p-6 text-center transition-all duration-300 hover:-translate-y-1 group">
                         <div class="absolute inset-0 rounded-[inherit] pointer-events-none p-[2px] bg-gradient-to-tl from-gecon via-gecon/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity" style="-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude;"></div>
-                        <div class="beam-h beam-delay-2"></div>
+                        <div class="beam-h beam-delay-3"></div>
                         <span class="relative z-10 text-2xl md:text-4xl font-extrabold text-gecon stat-num block mb-1 drop-shadow-sm">24h</span>
                         <span class="relative z-10 text-[9px] md:text-[10px] text-stone-600 uppercase tracking-widest font-bold">Tecnologia</span>
                     </div>
