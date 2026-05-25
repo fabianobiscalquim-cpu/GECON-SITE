@@ -110,6 +110,22 @@
         @keyframes spin { to { transform: rotate(360deg); } }
 
         input[type="file"] { display: none; }
+
+        /* LINK INPUT */
+        .link-row { display: flex; gap: 6px; margin-top: 8px; }
+        .link-input {
+            flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px; padding: 7px 10px; color: #e2e8f0; font-family: 'Manrope', sans-serif;
+            font-size: 11px; outline: none; transition: border-color .2s;
+        }
+        .link-input:focus { border-color: #09492C; }
+        .link-input::placeholder { color: #374151; }
+        .btn-save-link {
+            background: rgba(9,73,44,0.2); border: 1px solid rgba(9,73,44,0.4); border-radius: 8px;
+            color: #4ade80; font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 700;
+            padding: 7px 10px; cursor: pointer; white-space: nowrap; transition: all .2s;
+        }
+        .btn-save-link:hover { background: rgba(9,73,44,0.4); }
     </style>
 </head>
 <body>
@@ -251,6 +267,7 @@
         grid.innerHTML = '';
         items.forEach(item => {
             const url = data[item.key] || '';
+            const link = data['link_' + item.key] || '';
             const card = document.createElement('div');
             card.className = 'media-card';
             card.id = 'card-' + item.key;
@@ -264,6 +281,12 @@
                 thumbHtml = `<div class="thumb-placeholder">${type === 'video' ? '▶' : '🖼'}</div>`;
             }
 
+            const linkRowHtml = type === 'image' ? `
+                <div class="link-row">
+                    <input class="link-input" id="link-${item.key}" type="url" placeholder="https://..." value="${link}">
+                    <button class="btn-save-link" onclick="saveLink('${item.key}')">↗ Salvar</button>
+                </div>` : '';
+
             card.innerHTML = `
                 ${thumbHtml}
                 <div class="card-info">
@@ -271,8 +294,9 @@
                     <div class="card-name">${item.name}</div>
                     <input type="file" id="file-${item.key}" accept="${type === 'video' ? 'video/*' : 'image/*'}" onchange="uploadFile('${item.key}', '${type}', this)">
                     <button class="btn-upload" onclick="document.getElementById('file-${item.key}').click()">
-                        ${url ? '↺ Trocar' : '↑ Enviar'}
+                        ${url ? '↺ Trocar foto' : '↑ Enviar foto'}
                     </button>
+                    ${linkRowHtml}
                     <div class="progress-bar-wrap" id="progress-wrap-${item.key}">
                         <div class="progress-bar" id="progress-${item.key}"></div>
                     </div>
@@ -282,6 +306,16 @@
             grid.appendChild(card);
         });
     }
+
+    // --- SAVE LINK ---
+    window.saveLink = async function(key) {
+        const linkVal = document.getElementById('link-' + key).value.trim();
+        const snap = await getDoc(doc(db, 'config', 'media'));
+        const existing = snap.exists() ? snap.data() : {};
+        existing['link_' + key] = linkVal;
+        await setDoc(doc(db, 'config', 'media'), existing);
+        showToast('Link salvo!');
+    };
 
     // --- UPLOAD ---
     window.uploadFile = async function(key, type, input) {
