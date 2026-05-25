@@ -168,16 +168,16 @@
             background: linear-gradient(-45deg,
                     #09492C 0%,
                     #147a4d 25%,
-                    #A2B3AB 40%,
-                    #ffffff 50%,
-                    #A2B3AB 60%,
+                    #A2B3AB 42%,
+                    #d4e0d9 50%,
+                    #A2B3AB 58%,
                     #147a4d 75%,
                     #09492C 100%);
             background-size: 200% auto;
             color: transparent;
             -webkit-background-clip: text;
             background-clip: text;
-            animation: shine 4s linear infinite;
+            animation: shine 6s linear infinite;
         }
 
         @keyframes shine {
@@ -267,6 +267,109 @@
             box-shadow: 0 20px 60px rgba(9, 73, 44, 0.12);
         }
 
+        /* Border Beam */
+        .beam-h {
+            position: absolute;
+            height: 2px; width: 80px;
+            top: 0; left: 0;
+            background: linear-gradient(90deg, transparent, rgba(74,222,128,1), rgba(16,185,129,0.6), transparent);
+            pointer-events: none;
+            z-index: 60;
+            animation: beamH 4s linear infinite;
+            filter: blur(0.5px);
+        }
+        .beam-v {
+            position: absolute;
+            width: 2px; height: 80px;
+            top: 0; right: 0;
+            background: linear-gradient(180deg, transparent, rgba(74,222,128,1), rgba(16,185,129,0.6), transparent);
+            pointer-events: none;
+            z-index: 60;
+            animation: beamV 5s linear infinite;
+            filter: blur(0.5px);
+        }
+        .beam-delay-1 { animation-delay: -1s; }
+        .beam-delay-2 { animation-delay: -2s; }
+        .beam-delay-3 { animation-delay: -3s; }
+        .beam-delay-4 { animation-delay: -4s; }
+        .beam-bottom { top: auto; bottom: 0; }
+
+        /* Marquee dot pulse */
+        .dot-pulse {
+            animation: dotPulse 2s ease-in-out infinite;
+        }
+        @keyframes dotPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); box-shadow: 0 0 4px rgba(9,73,44,0.5), 0 0 8px rgba(9,73,44,0.2); }
+            50%       { opacity: 1;   transform: scale(1.6); box-shadow: 0 0 8px rgba(9,73,44,0.9), 0 0 16px rgba(9,73,44,0.5), 0 0 24px rgba(9,73,44,0.2); }
+        }
+
+        @keyframes beamH {
+            from { transform: translateX(-100px); }
+            to   { transform: translateX(380px); }
+        }
+        @keyframes beamV {
+            from { transform: translateY(-100px); }
+            to   { transform: translateY(520px); }
+        }
+
+        /* Ambient light orb */
+        .ambient-orb {
+            position: fixed;
+            width: 900px;
+            height: 900px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(9,73,44,0.04) 0%, rgba(9,73,44,0.015) 40%, transparent 70%);
+            pointer-events: none;
+            z-index: 9999;
+            top: -300px;
+            left: -300px;
+            animation: ambientFloat 25s ease-in-out infinite;
+            will-change: transform;
+            mix-blend-mode: multiply;
+        }
+
+        @keyframes ambientFloat {
+            0%   { transform: translate(0vw, 0vh); }
+            20%  { transform: translate(65vw, 20vh); }
+            40%  { transform: translate(50vw, 65vh); }
+            60%  { transform: translate(15vw, 80vh); }
+            80%  { transform: translate(70vw, 50vh); }
+            100% { transform: translate(0vw, 0vh); }
+        }
+
+        /* Testimonial video placeholder */
+        .video-thumb {
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #050a14 0%, #09492C22 100%);
+            border-radius: 1.25rem;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .video-thumb::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 40%, rgba(9,73,44,0.3) 0%, transparent 60%);
+        }
+        .play-btn {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 64px; height: 64px;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(8px);
+            border: 1.5px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s;
+        }
+        .video-thumb:hover .play-btn {
+            background: rgba(9,73,44,0.7);
+            border-color: rgba(162,179,171,0.4);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
         .stat-num {
             font-variant-numeric: tabular-nums;
         }
@@ -300,12 +403,14 @@
 
 <body class="font-sans bg-cream text-stone-800 antialiased overflow-x-hidden">
 
+    <!-- Luz ambiente flutuante -->
+    <div class="ambient-orb" aria-hidden="true"></div>
+
     <!-- NAV -->
     <header id="nav" class="fixed top-0 w-full z-50 transition-all duration-500 glass border-b border-stone-200/50">
-        <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-2 md:py-2">
             <a href="index.html" class="flex items-center gap-3 relative z-50 group">
-                <!-- Espaço para você carregar qualquer logo livremente. Usamos h-12 para dar tamanho, w-auto e object-contain para manter qualidade -->
-                <img src="assets/logo.png" alt="Gecon Logotipo" class="h-16 w-auto object-contain transition-transform group-hover:scale-105" />
+                <img src="assets/logo.png" alt="Gecon Logotipo" class="h-10 md:h-16 w-auto object-contain transition-transform group-hover:scale-105" />
                 <div class="hidden sm:block opacity-0 group-hover:opacity-100 transition-opacity absolute left-full ml-4 whitespace-nowrap">
                     <span class="text-[10px] text-gecon-light">Substitua logo no cód.</span>
                 </div>
@@ -326,6 +431,11 @@
                 <a href="#app" class="group relative flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-widest text-stone-500 hover:text-gecon transition-colors duration-300 px-4 py-3">
                     <iconify-icon icon="solar:smartphone-bold-duotone" class="text-sm opacity-40 group-hover:opacity-100 transition-all duration-300"></iconify-icon>
                     App Gecon
+                    <span class="absolute bottom-1.5 left-4 right-4 h-px bg-gecon origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></span>
+                </a>
+                <a href="#depoimentos" class="group relative flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-widest text-stone-500 hover:text-gecon transition-colors duration-300 px-4 py-3">
+                    <iconify-icon icon="solar:star-bold-duotone" class="text-sm opacity-40 group-hover:opacity-100 transition-all duration-300"></iconify-icon>
+                    Depoimentos
                     <span class="absolute bottom-1.5 left-4 right-4 h-px bg-gecon origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></span>
                 </a>
                 <a href="#contato" class="group relative flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-widest text-stone-500 hover:text-gecon transition-colors duration-300 px-4 py-3">
@@ -367,6 +477,7 @@
                 <a href="#solucoes" class="text-sm font-semibold uppercase tracking-widest text-stone-600 hover:text-gecon transition-colors py-2 border-b border-stone-100">Soluções</a>
                 <a href="#tecnologia" class="text-sm font-semibold uppercase tracking-widest text-stone-600 hover:text-gecon transition-colors py-2 border-b border-stone-100 mobile-link">Tecnologia</a>
                 <a href="#app" class="text-sm font-semibold uppercase tracking-widest text-stone-600 hover:text-gecon transition-colors py-2 border-b border-stone-100 mobile-link">App Gecon</a>
+                <a href="#depoimentos" class="text-sm font-semibold uppercase tracking-widest text-stone-600 hover:text-gecon transition-colors py-2 border-b border-stone-100 mobile-link">Depoimentos</a>
                 <a href="#contato" class="text-sm font-semibold uppercase tracking-widest text-stone-600 hover:text-gecon transition-colors py-2 border-b border-stone-100 mobile-link">Fale Conosco</a>
                 <div class="flex gap-3 pt-1">
                     <a href="https://fbs-facilities.web.app" target="_blank"
@@ -383,24 +494,27 @@
     </header>
 
     <!-- HERO -->
-    <section class="relative min-h-screen flex items-start md:items-center pt-24 pb-10 md:py-0 overflow-x-hidden">
+    <section class="relative min-h-screen md:min-h-[88vh] flex items-start md:items-center pt-24 pb-10 md:py-0 overflow-x-hidden">
         <div class="absolute inset-0">
             <img src="assets/hero.png" alt="Prédio residencial alto padrão"
                 class="w-full h-full object-cover hero-img" />
             <div class="absolute inset-0 bg-gradient-to-t from-cream via-cream/80 to-transparent"></div>
+            <!-- overlay extra no topo só para mobile — garante legibilidade do título -->
+            <div class="absolute inset-0 md:hidden bg-gradient-to-b from-black/55 via-black/20 to-transparent"></div>
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-6 w-full grid md:grid-cols-12 gap-6 md:gap-8 items-center mt-4 md:mt-0">
             <div class="md:col-span-6 reveal flex flex-col gap-4">
                 <div>
-                    <h1 class="text-[2.4rem] sm:text-5xl md:text-[90px] font-bold tracking-tight text-metallic leading-[0.95] mb-4 md:mb-6 drop-shadow-sm">
+                    <h1 class="text-[2.4rem] sm:text-5xl md:text-[90px] font-bold tracking-tight text-metallic leading-[0.95] mb-4 md:mb-6 [text-shadow:0_2px_20px_rgba(0,0,0,0.4)] md:[text-shadow:none]">
                         GECON Condomínios
                     </h1>
-                    <div class="inline-block px-5 py-1.5 rounded-full text-xs font-bold text-gecon uppercase tracking-widest border border-gecon/40 bg-gecon/5">
+                    <div class="relative inline-block overflow-hidden px-5 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border text-white md:text-gecon border-white/50 bg-white/15 md:border-gecon/40 md:bg-gecon/5 backdrop-blur-sm">
+                        <div class="beam-h beam-bottom beam-delay-2" style="width:50px;"></div>
                         Unidade São Paulo
                     </div>
                 </div>
                 <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-gecon leading-tight pr-4">
-                    Aqui você tem tudo que precisa, <br/><span class="text-stone-500">em um só lugar.</span>
+                    Aqui você tem tudo que precisa, <br/><span class="text-white/70 md:text-stone-500">em um só lugar.</span>
                 </h2>
             </div>
             <div class="md:col-span-6 reveal delay-3 flex flex-col justify-center gap-6 md:gap-10">
@@ -410,6 +524,7 @@
                     
                     <!-- Card 1: Administração Condominial (Azul) -->
                     <div class="absolute inset-0 w-full h-full rounded-[2rem] overflow-hidden border-t border-l border-r border-b border-t-white/15 border-l-white/8 border-r-white/8 border-b-white/5 bg-white/[0.04] backdrop-blur-2xl backdrop-saturate-150 p-6 flex flex-col justify-between shadow-[0_24px_60px_rgba(59,130,246,0.15)]" style="animation: stackCycle 15s infinite cubic-bezier(0.4, 0, 0.2, 1); animation-delay: 0s;">
+                        <div class="beam-h"></div><div class="beam-v"></div>
                         <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=400&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-25 z-0" alt="Administração Condominial">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#050a14]/90 via-[#050a14]/55 to-transparent z-0 pointer-events-none"></div>
                         <div class="absolute -top-6 -right-6 w-44 h-44 bg-[#3B82F6] rounded-full blur-[100px] opacity-30 pointer-events-none z-0"></div>
@@ -431,6 +546,7 @@
 
                     <!-- Card 2: Mão de Obra Terceirizada (Verde) -->
                     <div class="absolute inset-0 w-full h-full rounded-[2rem] overflow-hidden border-t border-l border-r border-b border-t-white/15 border-l-white/8 border-r-white/8 border-b-white/5 bg-white/[0.04] backdrop-blur-2xl backdrop-saturate-150 p-6 flex flex-col justify-between shadow-[0_24px_60px_rgba(16,185,129,0.15)]" style="animation: stackCycle 15s infinite cubic-bezier(0.4, 0, 0.2, 1); animation-delay: -3s;">
+                        <div class="beam-h beam-delay-1"></div><div class="beam-v beam-delay-1"></div>
                         <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=400&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-25 z-0" alt="Mão de Obra Terceirizada">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#050a14]/90 via-[#050a14]/55 to-transparent z-0 pointer-events-none"></div>
                         <div class="absolute -top-6 -right-6 w-44 h-44 bg-[#10b981] rounded-full blur-[100px] opacity-30 pointer-events-none z-0"></div>
@@ -452,6 +568,7 @@
 
                     <!-- Card 3: Portaria Remota (Branco) -->
                     <div class="absolute inset-0 w-full h-full rounded-[2rem] overflow-hidden border-t border-l border-r border-b border-t-white/15 border-l-white/8 border-r-white/8 border-b-white/5 bg-white/[0.04] backdrop-blur-2xl backdrop-saturate-150 p-6 flex flex-col justify-between shadow-[0_24px_60px_rgba(255,255,255,0.06)]" style="animation: stackCycle 15s infinite cubic-bezier(0.4, 0, 0.2, 1); animation-delay: -6s;">
+                        <div class="beam-h beam-delay-2"></div><div class="beam-v beam-delay-2"></div>
                         <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=400&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-25 z-0" alt="Portaria Remota">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#050a14]/90 via-[#050a14]/55 to-transparent z-0 pointer-events-none"></div>
                         <div class="absolute -top-6 -right-6 w-44 h-44 bg-white rounded-full blur-[100px] opacity-15 pointer-events-none z-0"></div>
@@ -473,6 +590,7 @@
 
                     <!-- Card 4: Tecnologia (Ouro) -->
                     <div class="absolute inset-0 w-full h-full rounded-[2rem] overflow-hidden border-t border-l border-r border-b border-t-white/15 border-l-white/8 border-r-white/8 border-b-white/5 bg-white/[0.04] backdrop-blur-2xl backdrop-saturate-150 p-6 flex flex-col justify-between shadow-[0_24px_60px_rgba(201,162,39,0.18)]" style="animation: stackCycle 15s infinite cubic-bezier(0.4, 0, 0.2, 1); animation-delay: -9s;">
+                        <div class="beam-h beam-delay-3"></div><div class="beam-v beam-delay-3"></div>
                         <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=400&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-25 z-0" alt="Tecnologia">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#050a14]/90 via-[#050a14]/55 to-transparent z-0 pointer-events-none"></div>
                         <div class="absolute -top-6 -right-6 w-44 h-44 bg-[#C9A227] rounded-full blur-[100px] opacity-35 pointer-events-none z-0"></div>
@@ -494,6 +612,7 @@
 
                     <!-- Card 5: Prestação de Contas (Prateado) -->
                     <div class="absolute inset-0 w-full h-full rounded-[2rem] overflow-hidden border-t border-l border-r border-b border-t-white/15 border-l-white/8 border-r-white/8 border-b-white/5 bg-white/[0.04] backdrop-blur-2xl backdrop-saturate-150 p-6 flex flex-col justify-between shadow-[0_24px_60px_rgba(148,163,184,0.12)]" style="animation: stackCycle 15s infinite cubic-bezier(0.4, 0, 0.2, 1); animation-delay: -12s;">
+                        <div class="beam-h beam-delay-4"></div><div class="beam-v beam-delay-4"></div>
                         <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=400&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-25 z-0" alt="Prestação de Contas">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#050a14]/90 via-[#050a14]/55 to-transparent z-0 pointer-events-none"></div>
                         <div class="absolute -top-6 -right-6 w-44 h-44 bg-[#94A3B8] rounded-full blur-[100px] opacity-25 pointer-events-none z-0"></div>
@@ -516,18 +635,21 @@
                 </div>
 
                 <div class="grid grid-cols-3 gap-2 md:gap-4 w-full">
-                    <div class="relative bg-transparent rounded-2xl md:rounded-3xl p-3 md:p-6 text-center transition-all duration-300 hover:-translate-y-1 group">
+                    <div class="relative overflow-hidden bg-transparent rounded-2xl md:rounded-3xl p-3 md:p-6 text-center transition-all duration-300 hover:-translate-y-1 group">
                         <div class="absolute inset-0 rounded-[inherit] pointer-events-none p-[2px] bg-gradient-to-tl from-gecon via-gecon/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity" style="-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude;"></div>
+                        <div class="beam-h beam-delay-1"></div>
                         <span class="relative z-10 text-2xl md:text-4xl font-extrabold text-gecon stat-num block mb-1 drop-shadow-sm">+200</span>
                         <span class="relative z-10 text-[9px] md:text-[10px] text-stone-600 uppercase tracking-widest font-bold">Condomínios</span>
                     </div>
-                    <div class="relative bg-transparent rounded-2xl md:rounded-3xl p-3 md:p-6 text-center transition-all duration-300 hover:-translate-y-1 group">
+                    <div class="relative overflow-hidden bg-transparent rounded-2xl md:rounded-3xl p-3 md:p-6 text-center transition-all duration-300 hover:-translate-y-1 group">
                         <div class="absolute inset-0 rounded-[inherit] pointer-events-none p-[2px] bg-gradient-to-tl from-gecon via-gecon/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity" style="-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude;"></div>
+                        <div class="beam-h beam-delay-3"></div>
                         <span class="relative z-10 text-2xl md:text-4xl font-extrabold text-gecon stat-num block mb-1 drop-shadow-sm">30%</span>
                         <span class="relative z-10 text-[9px] md:text-[10px] text-stone-600 uppercase tracking-widest font-bold">Redução Custo</span>
                     </div>
-                    <div class="relative bg-transparent rounded-2xl md:rounded-3xl p-3 md:p-6 text-center transition-all duration-300 hover:-translate-y-1 group">
+                    <div class="relative overflow-hidden bg-transparent rounded-2xl md:rounded-3xl p-3 md:p-6 text-center transition-all duration-300 hover:-translate-y-1 group">
                         <div class="absolute inset-0 rounded-[inherit] pointer-events-none p-[2px] bg-gradient-to-tl from-gecon via-gecon/10 to-transparent opacity-80 group-hover:opacity-100 transition-opacity" style="-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude;"></div>
+                        <div class="beam-h beam-delay-2"></div>
                         <span class="relative z-10 text-2xl md:text-4xl font-extrabold text-gecon stat-num block mb-1 drop-shadow-sm">24h</span>
                         <span class="relative z-10 text-[9px] md:text-[10px] text-stone-600 uppercase tracking-widest font-bold">Tecnologia</span>
                     </div>
@@ -537,29 +659,19 @@
     </section>
 
     <!-- MARQUEE -->
-    <div class="py-5 overflow-hidden bg-cream -mt-2">
+    <div class="py-4 overflow-hidden bg-cream -mt-8 md:-mt-10">
         <div class="marquee-track">
-            <span class="text-sm font-bold uppercase tracking-[.25em] text-gecon-light mx-10">Administração
-                Condominial</span><span class="text-gecon mx-4">◆</span>
-            <span class="text-sm font-bold uppercase tracking-[.25em] text-gecon-light mx-10">Mão de Obra
-                Especializada</span><span class="text-gecon mx-4">◆</span>
-            <span class="text-sm font-bold uppercase tracking-[.25em] text-gecon-light mx-10">Contabilidade</span><span
-                class="text-gecon mx-4">◆</span>
-            <span class="text-sm font-bold uppercase tracking-[.25em] text-gecon-light mx-10">Assessoria
-                Jurídica</span><span class="text-gecon mx-4">◆</span>
-            <span class="text-sm font-bold uppercase tracking-[.25em] text-gecon-light mx-10">Portaria
-                Virtual</span><span class="text-gecon mx-4">◆</span>
-            <span class="text-sm font-bold uppercase tracking-[.25em] text-gecon-light mx-10">Gecon Bank</span><span
-                class="text-gecon mx-4">◆</span>
+            <span class="text-sm font-bold uppercase tracking-[.25em] text-gecon-light mx-10">Administração Condominial</span><span class="text-gecon-light mx-4">◆</span>
+            <span class="text-sm font-bold uppercase tracking-[.25em] text-gecon-light mx-10">Mão de Obra Especializada</span><span class="text-gecon-light mx-4">◆</span>
+            <span class="text-sm font-bold uppercase tracking-[.25em] text-gecon-light mx-10">Contabilidade</span><span class="text-gecon-light mx-4">◆</span>
+            <span class="text-sm font-bold uppercase tracking-[.25em] text-gecon-light mx-10">Assessoria Jurídica</span><span class="text-gecon-light mx-4">◆</span>
+            <span class="text-sm font-bold uppercase tracking-[.25em] text-gecon-light mx-10">Portaria Virtual</span><span class="text-gecon-light mx-4">◆</span>
+            <span class="text-sm font-bold uppercase tracking-[.25em] text-gecon-light mx-10">Gecon Bank</span><span class="text-gecon-light mx-4">◆</span>
             <!-- Duplicado para fluidez -->
-            <span class="text-sm font-bold uppercase tracking-[.25em] text-gecon-light mx-10">Administração
-                Condominial</span><span class="text-gecon mx-4">◆</span>
-            <span class="text-sm font-bold uppercase tracking-[.25em] text-gecon-light mx-10">Mão de Obra
-                Especializada</span><span class="text-gecon mx-4">◆</span>
-            <span class="text-sm font-bold uppercase tracking-[.25em] text-gecon-light mx-10">Contabilidade</span><span
-                class="text-gecon mx-4">◆</span>
-            <span class="text-sm font-bold uppercase tracking-[.25em] text-gecon-light mx-10">Assessoria
-                Jurídica</span><span class="text-gecon mx-4">◆</span>
+            <span class="text-sm font-bold uppercase tracking-[.25em] text-gecon-light mx-10">Administração Condominial</span><span class="text-gecon-light mx-4">◆</span>
+            <span class="text-sm font-bold uppercase tracking-[.25em] text-gecon-light mx-10">Mão de Obra Especializada</span><span class="text-gecon-light mx-4">◆</span>
+            <span class="text-sm font-bold uppercase tracking-[.25em] text-gecon-light mx-10">Contabilidade</span><span class="text-gecon-light mx-4">◆</span>
+            <span class="text-sm font-bold uppercase tracking-[.25em] text-gecon-light mx-10">Assessoria Jurídica</span><span class="text-gecon-light mx-4">◆</span>
         </div>
     </div>
 
@@ -766,6 +878,120 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DEPOIMENTOS -->
+    <section id="depoimentos" class="py-24 bg-sand overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <!-- Header -->
+            <div class="text-center mb-14 reveal">
+                <span class="text-xs font-bold uppercase tracking-widest text-gecon-light block mb-3">Quem já confia na Gecon</span>
+                <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-gecon mb-4">Síndicos que transformaram<br class="hidden md:block"> seus condomínios</h2>
+                <p class="text-stone-500 text-lg max-w-xl mx-auto">Resultados reais de quem escolheu gestão de verdade.</p>
+            </div>
+
+            <!-- Depoimentos em texto -->
+            <div class="grid md:grid-cols-3 gap-5 mb-10 reveal delay-2">
+
+                <!-- Card 1 -->
+                <div class="bg-white rounded-3xl p-7 border border-stone-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col gap-5">
+                    <div class="flex gap-1">
+                        <iconify-icon icon="solar:star-bold" class="text-amber-400 text-base"></iconify-icon>
+                        <iconify-icon icon="solar:star-bold" class="text-amber-400 text-base"></iconify-icon>
+                        <iconify-icon icon="solar:star-bold" class="text-amber-400 text-base"></iconify-icon>
+                        <iconify-icon icon="solar:star-bold" class="text-amber-400 text-base"></iconify-icon>
+                        <iconify-icon icon="solar:star-bold" class="text-amber-400 text-base"></iconify-icon>
+                    </div>
+                    <p class="text-stone-600 text-sm leading-relaxed flex-1">"Reduzimos os custos do condomínio em mais de 28% no primeiro ano. A transparência na prestação de contas é incomparável — tudo em tempo real no app."</p>
+                    <div class="flex items-center gap-3 pt-2 border-t border-stone-100">
+                        <div class="w-10 h-10 rounded-full bg-gecon/10 flex items-center justify-center shrink-0">
+                            <span class="text-xs font-bold text-gecon">RS</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-stone-800">Ricardo Souza</p>
+                            <p class="text-xs text-stone-400">Síndico · Edifício Vista Verde, SP</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-3xl p-7 border border-stone-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col gap-5">
+                    <div class="flex gap-1">
+                        <iconify-icon icon="solar:star-bold" class="text-amber-400 text-base"></iconify-icon>
+                        <iconify-icon icon="solar:star-bold" class="text-amber-400 text-base"></iconify-icon>
+                        <iconify-icon icon="solar:star-bold" class="text-amber-400 text-base"></iconify-icon>
+                        <iconify-icon icon="solar:star-bold" class="text-amber-400 text-base"></iconify-icon>
+                        <iconify-icon icon="solar:star-bold" class="text-amber-400 text-base"></iconify-icon>
+                    </div>
+                    <p class="text-stone-600 text-sm leading-relaxed flex-1">"A portaria remota eliminou problemas de segurança que tínhamos há anos. O suporte é ágil e a equipe da Gecon realmente entende de condomínio."</p>
+                    <div class="flex items-center gap-3 pt-2 border-t border-stone-100">
+                        <div class="w-10 h-10 rounded-full bg-gecon/10 flex items-center justify-center shrink-0">
+                            <span class="text-xs font-bold text-gecon">MC</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-stone-800">Mariana Costa</p>
+                            <p class="text-xs text-stone-400">Síndica · Residencial Jardins, SP</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white rounded-3xl p-7 border border-stone-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col gap-5">
+                    <div class="flex gap-1">
+                        <iconify-icon icon="solar:star-bold" class="text-amber-400 text-base"></iconify-icon>
+                        <iconify-icon icon="solar:star-bold" class="text-amber-400 text-base"></iconify-icon>
+                        <iconify-icon icon="solar:star-bold" class="text-amber-400 text-base"></iconify-icon>
+                        <iconify-icon icon="solar:star-bold" class="text-amber-400 text-base"></iconify-icon>
+                        <iconify-icon icon="solar:star-bold" class="text-amber-400 text-base"></iconify-icon>
+                    </div>
+                    <p class="text-stone-600 text-sm leading-relaxed flex-1">"Depois de 3 administradoras ruins, finalmente encontrei uma que entrega o que promete. O Gecon Bank com taxa zero nos boletos foi o diferencial."</p>
+                    <div class="flex items-center gap-3 pt-2 border-t border-stone-100">
+                        <div class="w-10 h-10 rounded-full bg-gecon/10 flex items-center justify-center shrink-0">
+                            <span class="text-xs font-bold text-gecon">FA</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-stone-800">Fernando Alves</p>
+                            <p class="text-xs text-stone-400">Síndico · Torres do Morumbi, SP</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Vídeos -->
+            <div class="grid md:grid-cols-2 gap-5 reveal delay-3">
+
+                <!-- Vídeo 1 -->
+                <div class="group">
+                    <div class="video-thumb mb-4">
+                        <div class="play-btn">
+                            <iconify-icon icon="solar:play-bold" class="text-white text-2xl ml-1"></iconify-icon>
+                        </div>
+                        <div class="absolute bottom-4 left-5 right-5">
+                            <p class="text-white/40 text-[10px] uppercase tracking-widest font-bold mb-1">Depoimento em Vídeo</p>
+                            <p class="text-white font-bold text-sm">— Adicione o vídeo aqui —</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-stone-400 text-center uppercase tracking-widest font-bold">Síndico · Condomínio 01</p>
+                </div>
+
+                <!-- Vídeo 2 -->
+                <div class="group">
+                    <div class="video-thumb mb-4">
+                        <div class="play-btn">
+                            <iconify-icon icon="solar:play-bold" class="text-white text-2xl ml-1"></iconify-icon>
+                        </div>
+                        <div class="absolute bottom-4 left-5 right-5">
+                            <p class="text-white/40 text-[10px] uppercase tracking-widest font-bold mb-1">Depoimento em Vídeo</p>
+                            <p class="text-white font-bold text-sm">— Adicione o vídeo aqui —</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-stone-400 text-center uppercase tracking-widest font-bold">Síndica · Condomínio 02</p>
+                </div>
+
             </div>
         </div>
     </section>

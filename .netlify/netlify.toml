@@ -9,7 +9,6 @@ redirects = []
 [build]
 publish = "C:\\Users\\User\\Antigravity\\projetos\\Gecon_SiteOficial"
 publishOrigin = "default"
-base = "C:\\Users\\User\\Antigravity\\projetos\\Gecon_SiteOficial"
 
 [build.environment]
 
