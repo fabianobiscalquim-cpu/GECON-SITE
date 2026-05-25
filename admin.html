@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gecon Admin</title>
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Manrope', sans-serif; background: #0a0f1a; color: #e2e8f0; min-height: 100vh; }
+
+        /* LOGIN */
+        #login-screen {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            background: radial-gradient(ellipse at 50% 0%, rgba(9,73,44,0.18) 0%, transparent 70%), #0a0f1a;
+        }
+        .login-card {
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px; padding: 48px 40px; width: 360px; backdrop-filter: blur(20px);
+        }
+        .login-logo { height: 48px; margin-bottom: 32px; display: block; }
+        .login-title { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+        .login-sub { font-size: 13px; color: #64748b; margin-bottom: 32px; }
+        .field-group { margin-bottom: 18px; }
+        .field-group label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #64748b; margin-bottom: 8px; }
+        .field-group input {
+            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px; padding: 12px 14px; color: #fff; font-family: 'Manrope', sans-serif;
+            font-size: 14px; outline: none; transition: border-color .2s;
+        }
+        .field-group input:focus { border-color: #09492C; }
+        .btn-login {
+            width: 100%; background: #09492C; color: #fff; border: none; border-radius: 10px;
+            padding: 13px; font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700;
+            cursor: pointer; margin-top: 8px; transition: background .2s;
+        }
+        .btn-login:hover { background: #0a5c37; }
+        .login-error { color: #f87171; font-size: 12px; margin-top: 12px; text-align: center; min-height: 18px; }
+
+        /* ADMIN PANEL */
+        #admin-panel { display: none; }
+        .topbar {
+            background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.07);
+            padding: 14px 32px; display: flex; align-items: center; justify-content: space-between;
+        }
+        .topbar-left { display: flex; align-items: center; gap: 12px; }
+        .topbar-left img { height: 36px; }
+        .topbar-left span { font-size: 13px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-logout {
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+            color: #94a3b8; font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 600;
+            padding: 7px 16px; cursor: pointer; transition: all .2s;
+        }
+        .btn-logout:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+        .admin-content { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+        .section-title {
+            font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
+            color: #09492C; background: rgba(9,73,44,0.1); border: 1px solid rgba(9,73,44,0.2);
+            border-radius: 20px; padding: 5px 14px; display: inline-block; margin-bottom: 20px;
+        }
+        .page-title { font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+        .page-sub { font-size: 14px; color: #64748b; margin-bottom: 40px; }
+
+        /* CARDS GRID */
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 48px; }
+        .media-card {
+            background: rgba(255,255,255,0.03); border: 1.5px solid rgba(255,255,255,0.07);
+            border-radius: 14px; overflow: hidden; position: relative; transition: border-color .2s;
+        }
+        .media-card:hover { border-color: rgba(9,73,44,0.5); }
+        .media-card .thumb {
+            width: 100%; height: 140px; object-fit: cover; display: block; background: #111827;
+        }
+        .media-card .thumb-placeholder {
+            width: 100%; height: 140px; background: #111827; display: flex; align-items: center;
+            justify-content: center; color: #374151; font-size: 32px;
+        }
+        .media-card .card-info { padding: 12px 14px 14px; }
+        .media-card .card-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; margin-bottom: 10px; }
+        .media-card .card-name { font-size: 13px; font-weight: 600; color: #e2e8f0; margin-bottom: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .btn-upload {
+            width: 100%; background: rgba(9,73,44,0.15); border: 1px solid rgba(9,73,44,0.3);
+            border-radius: 8px; color: #4ade80; font-family: 'Manrope', sans-serif; font-size: 12px;
+            font-weight: 700; padding: 8px; cursor: pointer; transition: all .2s;
+        }
+        .btn-upload:hover { background: rgba(9,73,44,0.3); }
+        .btn-upload:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* UPLOAD PROGRESS */
+        .progress-bar-wrap { height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-top: 8px; overflow: hidden; display: none; }
+        .progress-bar { height: 100%; background: #09492C; width: 0%; transition: width .3s; border-radius: 2px; }
+        .upload-status { font-size: 11px; color: #4ade80; margin-top: 6px; min-height: 16px; text-align: center; }
+
+        /* TOAST */
+        #toast {
+            position: fixed; bottom: 24px; right: 24px; background: #09492C; color: #fff;
+            padding: 12px 20px; border-radius: 10px; font-size: 13px; font-weight: 600;
+            transform: translateY(80px); opacity: 0; transition: all .3s; z-index: 9999;
+        }
+        #toast.show { transform: translateY(0); opacity: 1; }
+
+        /* DIVIDER */
+        .divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 8px 0 40px; }
+
+        /* LOADING SPINNER */
+        .spinner { width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.1); border-top-color: #09492C; border-radius: 50%; animation: spin .7s linear infinite; display: inline-block; vertical-align: middle; margin-right: 8px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        input[type="file"] { display: none; }
+    </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+    <div class="login-card">
+        <img src="assets/logo.png" alt="Gecon" class="login-logo">
+        <div class="login-title">Área Administrativa</div>
+        <div class="login-sub">Acesso restrito — Gecon Condomínios</div>
+        <div class="field-group">
+            <label>E-mail</label>
+            <input type="email" id="email-input" value="admin@geconsaopaulo.com.br" autocomplete="username">
+        </div>
+        <div class="field-group">
+            <label>Senha</label>
+            <input type="password" id="pass-input" autocomplete="current-password" placeholder="••••••••">
+        </div>
+        <button class="btn-login" id="btn-login" onclick="doLogin()">Entrar</button>
+        <div class="login-error" id="login-error"></div>
+    </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel">
+    <div class="topbar">
+        <div class="topbar-left">
+            <img src="assets/logo.png" alt="Gecon">
+            <span>Painel Admin</span>
+        </div>
+        <button class="btn-logout" onclick="doLogout()">Sair</button>
+    </div>
+
+    <div class="admin-content">
+        <div class="section-title">Gestão de Mídia</div>
+        <div class="page-title">Fotos e Vídeos do Site</div>
+        <div class="page-sub">Clique em "Trocar" para substituir qualquer imagem ou vídeo. A alteração aparece no site imediatamente.</div>
+
+        <!-- HERO CARDS -->
+        <div class="section-title">Cards do Hero</div>
+        <hr class="divider">
+        <div class="cards-grid" id="hero-cards-grid">
+            <!-- gerado por JS -->
+        </div>
+
+        <!-- DEPOIMENTOS -->
+        <div class="section-title">Vídeos de Depoimentos</div>
+        <hr class="divider">
+        <div class="cards-grid" id="video-cards-grid">
+            <!-- gerado por JS -->
+        </div>
+    </div>
+</div>
+
+<div id="toast"></div>
+
+<!-- FIREBASE SDK -->
+<script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import { getFirestore, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+    import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js';
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyA8MtrT0vz-l2o__H4h8LzbrCYXo1kln7k",
+        authDomain: "site-gecon.firebaseapp.com",
+        projectId: "site-gecon",
+        storageBucket: "site-gecon.firebasestorage.app",
+        messagingSenderId: "409298591396",
+        appId: "1:409298591396:web:0198c14ac54278b16fd031"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    const HERO_CARDS = [
+        { key: 'card_admin',     label: 'Card 1', name: 'Administração Condominial' },
+        { key: 'card_maodeobra', label: 'Card 2', name: 'Mão de Obra Terceirizada' },
+        { key: 'card_portaria',  label: 'Card 3', name: 'Portaria Remota' },
+        { key: 'card_tech',      label: 'Card 4', name: 'Tecnologia' },
+        { key: 'card_contas',    label: 'Card 5', name: 'Prestação de Contas' },
+    ];
+
+    const VIDEO_CARDS = [
+        { key: 'video_dep1', label: 'Vídeo 1', name: 'Depoimento 1' },
+        { key: 'video_dep2', label: 'Vídeo 2', name: 'Depoimento 2' },
+    ];
+
+    // --- AUTH ---
+    window.doLogin = async function() {
+        const btn = document.getElementById('btn-login');
+        const err = document.getElementById('login-error');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Entrando...';
+        err.textContent = '';
+        try {
+            await signInWithEmailAndPassword(auth,
+                document.getElementById('email-input').value,
+                document.getElementById('pass-input').value
+            );
+        } catch(e) {
+            err.textContent = 'E-mail ou senha incorretos.';
+            btn.disabled = false;
+            btn.textContent = 'Entrar';
+        }
+    };
+
+    document.getElementById('pass-input').addEventListener('keydown', e => {
+        if (e.key === 'Enter') window.doLogin();
+    });
+
+    window.doLogout = async function() {
+        await signOut(auth);
+    };
+
+    onAuthStateChanged(auth, user => {
+        if (user) {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'block';
+            loadMedia();
+        } else {
+            document.getElementById('login-screen').style.display = 'flex';
+            document.getElementById('admin-panel').style.display = 'none';
+        }
+    });
+
+    // --- LOAD MEDIA ---
+    async function loadMedia() {
+        const snap = await getDoc(doc(db, 'config', 'media'));
+        const data = snap.exists() ? snap.data() : {};
+        renderCards('hero-cards-grid', HERO_CARDS, data, 'image');
+        renderCards('video-cards-grid', VIDEO_CARDS, data, 'video');
+    }
+
+    function renderCards(gridId, items, data, type) {
+        const grid = document.getElementById(gridId);
+        grid.innerHTML = '';
+        items.forEach(item => {
+            const url = data[item.key] || '';
+            const card = document.createElement('div');
+            card.className = 'media-card';
+            card.id = 'card-' + item.key;
+
+            let thumbHtml = '';
+            if (url && type === 'image') {
+                thumbHtml = `<img class="thumb" src="${url}" alt="${item.name}">`;
+            } else if (url && type === 'video') {
+                thumbHtml = `<video class="thumb" src="${url}" muted></video>`;
+            } else {
+                thumbHtml = `<div class="thumb-placeholder">${type === 'video' ? '▶' : '🖼'}</div>`;
+            }
+
+            card.innerHTML = `
+                ${thumbHtml}
+                <div class="card-info">
+                    <div class="card-label">${item.label}</div>
+                    <div class="card-name">${item.name}</div>
+                    <input type="file" id="file-${item.key}" accept="${type === 'video' ? 'video/*' : 'image/*'}" onchange="uploadFile('${item.key}', '${type}', this)">
+                    <button class="btn-upload" onclick="document.getElementById('file-${item.key}').click()">
+                        ${url ? '↺ Trocar' : '↑ Enviar'}
+                    </button>
+                    <div class="progress-bar-wrap" id="progress-wrap-${item.key}">
+                        <div class="progress-bar" id="progress-${item.key}"></div>
+                    </div>
+                    <div class="upload-status" id="status-${item.key}"></div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    // --- UPLOAD ---
+    window.uploadFile = async function(key, type, input) {
+        const file = input.files[0];
+        if (!file) return;
+
+        const btn = document.querySelector(`#card-${key} .btn-upload`);
+        const progressWrap = document.getElementById('progress-wrap-' + key);
+        const progressBar = document.getElementById('progress-' + key);
+        const status = document.getElementById('status-' + key);
+
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Enviando...';
+        progressWrap.style.display = 'block';
+        status.textContent = '';
+
+        const ext = file.name.split('.').pop();
+        const storageRef = ref(storage, `${type}s/${key}.${ext}`);
+        const task = uploadBytesResumable(storageRef, file);
+
+        task.on('state_changed',
+            snap => {
+                const pct = Math.round(snap.bytesTransferred / snap.totalBytes * 100);
+                progressBar.style.width = pct + '%';
+                status.textContent = pct + '%';
+            },
+            err => {
+                status.textContent = 'Erro no upload.';
+                btn.disabled = false;
+                btn.textContent = '↑ Enviar';
+                console.error(err);
+            },
+            async () => {
+                const url = await getDownloadURL(task.snapshot.ref);
+                const snap = await getDoc(doc(db, 'config', 'media'));
+                const existing = snap.exists() ? snap.data() : {};
+                existing[key] = url;
+                await setDoc(doc(db, 'config', 'media'), existing);
+                showToast(`${key} atualizado com sucesso!`);
+                loadMedia();
+            }
+        );
+    };
+
+    // --- TOAST ---
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = '✓ ' + msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 3000);
+    }
+</script>
+</body>
+</html>
